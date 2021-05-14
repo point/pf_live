@@ -1,0 +1,42 @@
+<h1>💳 Personal Finances</h1>
+<table id="ExpensesTable" phx-hook="ExpensesTable">
+  <thead>
+    <tr><td>Date</td><td>Amount</td><td>Destination</td></tr>
+  </thead>
+    <%= live_component @socket, PfLive.ExpensesTableComponent, id: "expenses-table", entries: @entries %>
+</table>
+
+<div class="chart-wrapper">
+  <div class="by-month">
+    <h2>💰 Expenses by month</h2>
+    <canvas id="by_month" width="400" height="400"></canvas>
+  </div>
+
+  <div class="by-day">
+    <h2>💸 Expenses this month</h2>
+    <canvas id="by_day" width="400" height="400"></canvas>
+  </div>
+</div>
+
+<div class="add-row">
+  <h2>➕ New expenses</h2>
+  <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+    <div>
+      <label for="date">Date:</label>
+      <%= date_input f, :date, [id: "date", required: "required", placeholder: "yyyy-mm-dd"] %>
+      </div>
+
+      <div>
+        <label for="amount">Amount, $:</label>
+        <%= number_input f, :amount, [min: 0.1, step: "any", value: "100.00"] %>
+      </div>
+
+      <div>
+        <label for="description">Destination:</label>
+        <%= textarea f, :description, [placeholder: "Where you spent your money", cols: 60, rows: 4, required: "required"] %>
+      </div>
+
+      <button>Add</button>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js" type="text/javascript"></script>

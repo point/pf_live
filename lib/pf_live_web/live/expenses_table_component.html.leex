@@ -1,0 +1,5 @@
+<tbody>
+  <%= for entry <- @entries do %>
+    <tr><td><%= Date.to_string(entry.date) %></td><td>$<%= entry.amount %></td><td><%= entry.description %></td></tr>
+  <% end %>
+</tbody>
